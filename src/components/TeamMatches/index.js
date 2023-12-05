@@ -18,7 +18,7 @@ class TeamMatches extends Component {
     const {params} = match
     const {id} = params
 
-    const response = await fetch(`https://apis.ccbp.in/ipl/${id}`)
+    const response = await fetch(`https://apis.ccbp.in/ipl/:${id}`)
     const fetchData = await response.json()
     const updatedData = {
       teamBannerUrl: fetchData.team_banner_url,
@@ -32,7 +32,7 @@ class TeamMatches extends Component {
         matchStatus: fetchData.latest_match_details.match_status,
         result: fetchData.latest_match_details.result,
         secondInnings: fetchData.latest_match_details.second_innings,
-        umpires: fetchData.latestMatchDetails.umpires,
+        umpires: fetchData.latest_match_details.umpires,
         venue: fetchData.latest_match_details.venue,
       },
       recentMatches: fetchData.recent_matches.map(recentMatch => ({
@@ -56,13 +56,13 @@ class TeamMatches extends Component {
     return (
       <div className="team-matches-container">
         <img src={teamBannerUrl} alt="team banner" className="team-banner" />
-        <LatestMatch LatestMatch={latestMatchDetails} />
+        <LatestMatch latestMatch={latestMatchDetails} />
         {this.renderTeamMatchesList()}
       </div>
     )
   }
 
-  renderRecenterMatches = () => {
+  renderRecentMatches = () => {
     const {matchesData} = this.state
     const {recentMatches} = matchesData
     return (
@@ -75,8 +75,8 @@ class TeamMatches extends Component {
   }
 
   renderLoader = () => (
-    <div className="loader-container" data-testid="loader">
-      <Loader type="BallTriangle" color="#00BFFF" height={80} width={80} />
+    <div data-testid="loader">
+      <Loader type="Oval" color="#ffffff" height={50} width={50} />
     </div>
   )
 
